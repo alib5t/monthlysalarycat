@@ -1,4 +1,4 @@
-```yaml
+
 workflows:
   windows-build:
     name: Windows EXE Build
@@ -23,4 +23,3 @@ workflows:
     artifacts:
       - build/windows/x64/runner/Release/**
       - windows-app.zip
-```
