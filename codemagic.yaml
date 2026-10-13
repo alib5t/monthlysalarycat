@@ -1,27 +1,5 @@
 
 workflows:
-  ios-app:
-    name: iOS Unsigned APP
-    max_build_duration: 120
-    instance_type: mac_mini_m2
-
-    environment:
-      flutter: stable
-      xcode: 26.5
-      cocoapods: default
-
-    scripts:
-      - name: Get Flutter packages
-        script: flutter pub get
-
-      - name: Build iOS APP
-        script: |
-          flutter build ios --release --no-codesign
-
-    artifacts:
-      - build/ios/iphoneos/**/*.app
-      - /tmp/xcodebuild_logs/*.log
-
   android-apk:
     name: Android APK
     max_build_duration: 120
@@ -32,39 +10,10 @@ workflows:
 
     scripts:
       - name: Get Flutter packages
-        script: |
-          flutter pub get
+        script: flutter pub get
 
-      - name: Build APK
-        script: |
-          flutter build apk --release
+      - name: Build release APK
+        script: flutter build apk --release
 
     artifacts:
       - build/app/outputs/flutter-apk/*.apk
-
-  windows-exe:
-    name: Windows EXE
-    max_build_duration: 120
-    instance_type: windows_x2
-
-    environment:
-      flutter: stable
-
-    scripts:
-      - name: Get Flutter packages
-        script: flutter pub get
-
-      - name: Enable Windows
-        script: flutter config --enable-windows-desktop
-
-      - name: Build Windows
-        script: flutter build windows --release
-
-      - name: Package Windows files
-        script: |
-          cd build/windows/x64/runner/Release
-          7z a -tzip ../../../../../../windows-release.zip ./*
-
-    artifacts:
-      - windows-release.zip
-      - build/windows/x64/runner/Release/*.exe
